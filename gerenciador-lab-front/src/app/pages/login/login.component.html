@@ -1,0 +1,29 @@
+<div class="login-container">
+  <h2>Entrar</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <input
+      type="email"
+      placeholder="E-mail"
+      formControlName="email"
+      class="form-input"
+    />
+    <input
+      type="password"
+      placeholder="Senha"
+      formControlName="password"
+      class="form-input"
+    />
+
+    <button
+      type="submit"
+      class="submit-button"
+      [disabled]="form.invalid || form.pending"
+    >
+      <span class="button-text">Entrar</span>
+      <div class="button-glow"></div>
+    </button>
+  </form>
+
+  <a routerLink="/register">Criar conta</a>
+</div>
