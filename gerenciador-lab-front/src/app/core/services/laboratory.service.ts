@@ -8,7 +8,7 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class LaboratoryService {
-  labAddress: string = environment.apiRoot + 'laboratories';
+  labAddress = environment.apiRoot + 'laboratories';
 
   constructor(private _http: HttpClient) {}
 
@@ -16,8 +16,8 @@ export class LaboratoryService {
     return this._http.get(this.labAddress) as Observable<Laboratory[]>;
   }
 
-  getLaboratory(id: number): Observable<Laboratory> {
-    return this._http.get(`${this.labAddress}/${id}`) as Observable<Laboratory>;
+  getLaboratory(id: number): Observable<{ laboratorio: Laboratory }> {
+    return this._http.get<{ laboratorio: Laboratory }>(`${this.labAddress}/${id}`);
   }
 
   postLaboratory(lab: Laboratory): Observable<Laboratory> {

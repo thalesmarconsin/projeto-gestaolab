@@ -6,6 +6,24 @@
   <a mat-button routerLink="/login">Sair</a>
 </mat-toolbar>
 
-<div class="dashboard-content">
-  <router-outlet></router-outlet>
+<div class="dashboard-container">
+  <h1>Laboratórios</h1>
+
+  <div class="lab-grid">
+    <div
+      class="lab-card"
+      *ngFor="let lab of laboratorios"
+      (click)="abrirDetalhes(lab.id)"
+    >
+      <h3>{{ lab.nome }}</h3>
+      <p *ngIf="lab.localizacao">📍 {{ lab.localizacao }}</p>
+    </div>
+
+    <div class="lab-card create-card" (click)="criarLaboratorio()">
+      <span>➕</span>
+      <p>Novo Laboratório</p>
+    </div>
+  </div>
 </div>
+
+<router-outlet></router-outlet>

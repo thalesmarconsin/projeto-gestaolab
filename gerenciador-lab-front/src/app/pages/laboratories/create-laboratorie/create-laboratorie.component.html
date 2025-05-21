@@ -1,0 +1,10 @@
+<div class="form-container">
+  <h2>Novo Laboratório</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <input type="text" formControlName="nome" placeholder="Nome do laboratório" />
+    <input type="text" formControlName="localizacao" placeholder="Localização (opcional)" />
+
+    <button type="submit" [disabled]="form.invalid">Criar</button>
+  </form>
+</div>

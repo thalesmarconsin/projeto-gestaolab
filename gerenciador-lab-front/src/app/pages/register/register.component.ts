@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
@@ -16,7 +16,7 @@ import { AuthService } from '../../core/services/auth.service';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, MaterialModule, SharedModule],
+  imports: [CommonModule, MaterialModule, SharedModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
@@ -24,7 +24,6 @@ export class RegisterComponent implements OnInit {
   form: FormGroup;
   hide = true;
   hideConfirmacao = true;
-  titulo = 'Cadastro de Usuário';
   localStorageKey = 'login';
 
   constructor(
@@ -74,8 +73,11 @@ export class RegisterComponent implements OnInit {
         this.snackBarService.showSuccessSnackbar('Registrado com sucesso!');
         this.router.navigateByUrl('/login');
       },
-      error: () => {
-        this.snackBarService.showErrorSnackbar('Erro ao registrar');
+      error: (error) => {
+        const msg = error?.error?.message || 'Erro ao registrar';
+        this.snackBarService.showErrorSnackbar(
+          msg.includes('users_email_unique') ? 'E-mail já está em uso' : msg
+        );
       }
     });
   }

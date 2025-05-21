@@ -2,32 +2,60 @@
   <h2>Criar Conta</h2>
 
   <form [formGroup]="form" (ngSubmit)="submit()">
-    <input type="text" placeholder="Nome" formControlName="nome" />
-    <input type="email" placeholder="E-mail" formControlName="email" />
-    <input type="password" placeholder="Senha" formControlName="senha" />
-    <input type="password" placeholder="Confirmar Senha" formControlName="confirmacao" />
-
-    <div *ngIf="senha?.touched && senha?.hasError('invalidsenha')" style="color: #ef4444; font-size: 12px;">
-      A senha deve conter ao menos uma letra maiúscula, um número e um caractere especial.
+    <input
+      type="text"
+      placeholder="Nome"
+      formControlName="nome"
+    />
+    <div *ngIf="form.get('nome')?.touched && form.get('nome')?.invalid" class="error">
+      Nome é obrigatório
     </div>
 
-    <button
-      type="submit"
-      class="submit-button"
-      [disabled]="form.invalid || form.pending"
-    >
-      <span class="button-text">Cadastrar</span>
-      <div class="button-glow"></div>
-    </button>
+    <input
+      type="email"
+      placeholder="E-mail"
+      formControlName="email"
+    />
+    <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="error">
+      E-mail inválido ou obrigatório
+    </div>
 
-    <button
-      type="button"
-      (click)="cancelar()"
-      class="submit-button"
-      style="background: #ef4444; margin-top: 10px;"
-    >
-      Cancelar
-    </button>
+    <div class="password-wrapper">
+      <input
+        [type]="hide ? 'password' : 'text'"
+        placeholder="Senha"
+        formControlName="senha"
+      />
+      <button type="button" class="toggle-btn" (click)="hide = !hide">
+        {{ hide ? '👁️' : '🚫' }}
+      </button>
+    </div>
+
+    <div class="password-wrapper">
+      <input
+        [type]="hideConfirmacao ? 'password' : 'text'"
+        placeholder="Confirmar Senha"
+        formControlName="confirmacao"
+      />
+      <button type="button" class="toggle-btn" (click)="hideConfirmacao = !hideConfirmacao">
+        {{ hideConfirmacao ? '👁️' : '🚫' }}
+      </button>
+    </div>
+
+    <div *ngIf="senha?.touched && senha?.hasError('invalidsenha')" class="error">
+      A senha deve conter uma letra maiúscula, número e caractere especial.
+    </div>
+
+    <div class="button-group">
+      <button type="submit" class="submit-button" [disabled]="form.invalid || form.pending">
+        <span class="button-text">Cadastrar</span>
+        <div class="button-glow"></div>
+      </button>
+
+      <button type="button" (click)="cancelar()" class="cancel-button">
+        Cancelar
+      </button>
+    </div>
   </form>
 
   <a routerLink="/login">Já tem conta? Entrar</a>

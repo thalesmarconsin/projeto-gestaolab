@@ -8,12 +8,24 @@
       formControlName="email"
       class="form-input"
     />
-    <input
-      type="password"
-      placeholder="Senha"
-      formControlName="password"
-      class="form-input"
-    />
+    <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="error">
+      E-mail obrigatório ou inválido
+    </div>
+
+    <div class="password-wrapper">
+      <input
+        [type]="hide ? 'password' : 'text'"
+        placeholder="Senha"
+        formControlName="password"
+        class="form-input"
+      />
+      <button type="button" class="toggle-btn" (click)="hide = !hide">
+        {{ hide ? '👁️' : '🚫' }}
+      </button>
+    </div>
+    <div *ngIf="form.get('password')?.touched && form.get('password')?.invalid" class="error">
+      Senha obrigatória
+    </div>
 
     <button
       type="submit"

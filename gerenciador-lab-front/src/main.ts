@@ -6,7 +6,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideHttpClient(withInterceptorsFromDi()), // <- CORRETO!
-    ...appConfig.providers, provideAnimationsAsync() // se tiver providers customizados
+    provideHttpClient(withInterceptorsFromDi()), 
+    ...appConfig.providers, provideAnimationsAsync() 
   ]
 });

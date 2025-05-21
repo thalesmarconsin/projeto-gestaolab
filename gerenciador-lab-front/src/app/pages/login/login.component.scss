@@ -1,10 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url('/assets/images/background.jpg') center/cover no-repeat;
+  font-family: 'Inter', sans-serif;
+}
+
 .login-container {
   max-width: 400px;
-  margin: 10vh auto;
+  width: 100%;
   padding: 2rem;
   background: #1a1a1d;
   border-radius: 12px;
-  box-shadow: 0 0 10px #fbaa00;
+  box-shadow: 0 0 10px rgb(43, 43, 117);
   color: white;
   text-align: center;
 
@@ -24,31 +35,70 @@
       border: 1px solid #444;
       color: white;
       border-radius: 8px;
+      font-size: 1rem;
+      width: 100%;
+      box-sizing: border-box;
     }
 
-    button {
-      padding: 0.75rem;
-      background: #fbaa00;
-      color: black;
-      border: none;
-      font-weight: bold;
-      border-radius: 8px;
+    .submit-button {
+      width: 150px;
+      margin: auto;
+      height: 60px;
+      border: 3px solid #315cfd;
+      border-radius: 45px;
+      transition: all 0.3s;
       cursor: pointer;
+      background: #7f98f5;
+      font-size: 1.2em;
+      font-weight: 550;
+      color: white;
 
       &:hover {
-        background: #ffcc00;
+        background: #315cfd;
+        font-size: 1.5em;
       }
     }
   }
 
-  .error {
-    color: #ff4c4c;
-    margin-top: 1rem;
-  }
-
   a {
     margin-top: 1rem;
-    color: #fbaa00;
+    color: #496ad4;
     display: block;
+    font-size: 0.9rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
+}
+
+.password-wrapper {
+  position: relative;
+
+  input {
+    width: 100%;
+  }
+
+  .toggle-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    width: auto;
+    height: auto;
+  }
+}
+
+.error {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
 }

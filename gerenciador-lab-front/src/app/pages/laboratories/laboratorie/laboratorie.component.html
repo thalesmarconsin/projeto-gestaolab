@@ -1,0 +1,12 @@
+<div class="detalhes-container" *ngIf="laboratorio">
+  <h2>{{ laboratorio.nome }}</h2>
+  <p *ngIf="laboratorio.localizacao">📍 {{ laboratorio.localizacao }}</p>
+
+  <div class="computador-grid">
+    <div class="computador-card" *ngFor="let comp of computadores">
+      <h4>{{ comp.nome }}</h4>
+      <p><strong>Patrimônio:</strong> {{ comp.patrimonio }}</p>
+      <p>Status: {{ comp.retirado ? 'Retirado' : 'Disponível' }}</p>
+    </div>
+  </div>    
+</div>
