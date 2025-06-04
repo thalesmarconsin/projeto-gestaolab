@@ -1,10 +1,22 @@
-<mat-toolbar color="primary">
-  <span>Lab Manager</span>
-  <span class="spacer"></span>
-  <a mat-button routerLink="/dashboard/laboratorios">Laboratórios</a>
-  <a mat-button routerLink="/dashboard/computadores">Computadores</a>
-  <a mat-button routerLink="/login">Sair</a>
-</mat-toolbar>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Work+Sans:400,600"
+    rel="stylesheet"
+  />
+<header>
+  <div class="container">
+    <h1 class="logo">Gerenciador de Laboratório</h1>
+
+    <nav>
+      <ul>
+        <li><a routerLink="/login">Sair</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
 <div class="dashboard-container">
   <h1>Laboratórios</h1>
@@ -12,16 +24,45 @@
   <div class="lab-grid">
     <div
       class="lab-card"
-      *ngFor="let lab of laboratorios"
+      *ngFor="let lab of laboratorios; let i = index"
       (click)="abrirDetalhes(lab.id)"
     >
+      <!-- Menu de opções -->
+      <div class="menu-container">
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-botao">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
+
+        <!-- MatMenu com as opções -->
+        <mat-menu #menu="matMenu" class="custom-menu">
+          <button mat-menu-item (click)="editarLaboratorio(lab.id)">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>Editar</span>
+          </button>
+          <button mat-menu-item (click)="excluirLaboratorio(lab.id)">
+            <i class="fa-solid fa-trash"></i>
+            <span>Excluir</span>
+          </button>
+          <button mat-menu-item (click)="alternarStatus(lab)">
+            <i class="fa-solid" [ngClass]="lab.status ? 'fa-circle-check' : 'fa-circle-xmark'"></i>
+            <span>{{ lab.status ? 'Desativar' : 'Ativar' }}</span>
+          </button>
+        </mat-menu>
+      </div>
+
+      <!-- Ícone de laboratório (sala de informática) -->
+      <div class="icone-central">
+        <i class="fa-solid fa-laptop-house"></i> <!-- Ícone de sala de informática -->
+      </div>
+
       <h3>{{ lab.nome }}</h3>
       <p *ngIf="lab.localizacao">📍 {{ lab.localizacao }}</p>
+      <p>Status: {{ lab.status ? 'Ativo' : 'Inativo' }}</p>
     </div>
 
+    <!-- Card para criar um novo laboratório -->
     <div class="lab-card create-card" (click)="criarLaboratorio()">
-      <span>➕</span>
-      <p>Novo Laboratório</p>
+      <p><i class="fa-solid fa-plus"></i> Novo Laboratório</p>
     </div>
   </div>
 </div>

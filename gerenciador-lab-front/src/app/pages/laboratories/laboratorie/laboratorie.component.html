@@ -1,12 +1,50 @@
+ <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+
 <div class="detalhes-container" *ngIf="laboratorio">
   <h2>{{ laboratorio.nome }}</h2>
   <p *ngIf="laboratorio.localizacao">📍 {{ laboratorio.localizacao }}</p>
 
   <div class="computador-grid">
-    <div class="computador-card" *ngFor="let comp of computadores">
-      <h4>{{ comp.nome }}</h4>
-      <p><strong>Patrimônio:</strong> {{ comp.patrimonio }}</p>
-      <p>Status: {{ comp.retirado ? 'Retirado' : 'Disponível' }}</p>
-    </div>
-  </div>    
+  <ng-container *ngFor="let comp of computadores; let i = index">
+   <div class="computador-card" [ngClass]="{ 'left-side': (i % 10) < 5, 'right-side': (i % 10) >= 5 }">
+  <div class="menu-container">
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-botao">
+      <i class="fa-solid fa-ellipsis-vertical"></i>
+    </button>
+
+    <mat-menu #menu="matMenu" class="custom-menu">
+      <button mat-menu-item (click)="editarComputador(comp.id)">
+        <i class="fa-solid fa-pen-to-square"></i>
+        <span>Editar</span>
+      </button>
+      <button mat-menu-item (click)="excluirComputador(comp.id)">
+        <i class="fa-solid fa-trash"></i>
+        <span>Excluir</span>
+      </button>
+      <button mat-menu-item (click)="alternarRetirada(comp)">
+        <i class="fa-solid" [ngClass]="comp.retirado ? 'fa-circle-check' : 'fa-circle-xmark'"></i>
+        <span>{{ comp.retirado ? 'Disponibilizar' : 'Indisponibilizar' }}</span>
+      </button>
+    </mat-menu>
+  </div>
+
+  <div class="icone-central">
+    <i class="fa-solid fa-desktop"></i>
+  </div>
+
+  <h4>{{ comp.nome }}</h4>
+  <p><strong>Patrimônio:</strong> {{ comp.patrimonio }}</p>
+  <p>Status: {{ comp.retirado ? 'Retirado' : 'Disponível' }}</p>
+</div>
+  </ng-container>
+</div>
+
+<div class="criar-computador-btn">
+  <button (click)="criarComputador()" class="botao-novo">
+    <i class="fa-solid fa-plus"></i> Novo Computador
+  </button>
+</div>  
 </div>

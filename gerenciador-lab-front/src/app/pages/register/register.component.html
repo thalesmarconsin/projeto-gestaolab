@@ -1,4 +1,8 @@
 <div class="login-container">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
   <h2>Criar Conta</h2>
 
   <form [formGroup]="form" (ngSubmit)="submit()">
@@ -27,7 +31,7 @@
         formControlName="senha"
       />
       <button type="button" class="toggle-btn" (click)="hide = !hide">
-        {{ hide ? '👁️' : '🚫' }}
+        <i [class]="hide ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'"></i>
       </button>
     </div>
 
@@ -38,7 +42,7 @@
         formControlName="confirmacao"
       />
       <button type="button" class="toggle-btn" (click)="hideConfirmacao = !hideConfirmacao">
-        {{ hideConfirmacao ? '👁️' : '🚫' }}
+        <i [class]="hideConfirmacao ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'"></i>
       </button>
     </div>
 

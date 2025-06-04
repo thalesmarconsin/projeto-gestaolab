@@ -1,0 +1,10 @@
+<div class="form-container">
+  <h2>Novo Computador</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <input type="text" formControlName="nome" placeholder="Nome do computador" />
+    <input type="text" formControlName="patrimonio" placeholder="Número do patrimônio" />
+
+    <button type="submit" [disabled]="form.invalid">Cadastrar</button>
+  </form>
+</div>

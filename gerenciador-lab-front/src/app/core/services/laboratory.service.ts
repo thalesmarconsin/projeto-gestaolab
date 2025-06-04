@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Laboratory } from '../models/laboratory.model';
 import { environment } from '../../../environments/environment';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +14,8 @@ export class LaboratoryService {
   constructor(private _http: HttpClient) {}
 
   getLaboratories(): Observable<Laboratory[]> {
-    return this._http.get(this.labAddress) as Observable<Laboratory[]>;
-  }
+  return this._http.get<Laboratory[]>(this.labAddress); 
+}
 
   getLaboratory(id: number): Observable<{ laboratorio: Laboratory }> {
     return this._http.get<{ laboratorio: Laboratory }>(`${this.labAddress}/${id}`);

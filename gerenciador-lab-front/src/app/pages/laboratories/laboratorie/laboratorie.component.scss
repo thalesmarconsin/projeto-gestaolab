@@ -6,25 +6,124 @@
     margin-bottom: 1rem;
   }
 
-  .computador-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 2rem;
+  .criar-computador-btn {
+    margin-top: 20px;
+    text-align: center;
+
+    .botao-novo {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      i {
+        margin-right: 8px;
+      }
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+}
+
+.computador-grid {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr); // 5 + corredor + 5
+  gap: 20px;
+  margin-top: 20px;
+  justify-items: center;
+}
+
+.computador-card {
+  position: relative;
+  background-color: #f0f0f0;
+  padding: 15px 10px 10px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 120px;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
   }
 
-  .computador-card {
-    width: 150px;
-    height: 120px;
-    background: #252529;
+  .icone-central {
+    font-size: 30px;
+    color: black;
+    margin-bottom: 10px;
+  }
+
+  h4 {
+    margin: 5px 0;
+    font-size: 16px;
+  }
+
+  p {
+    margin: 2px 0;
+    font-size: 13px;
+  }
+}
+
+.left-side {
+  grid-column: span 1;
+}
+
+.right-side {
+  grid-column: span 1;
+  grid-column-start: 7;
+}
+
+.menu-container {
+  position: absolute;
+  bottom: -35px; /* Alinha o menu de 3 pontos abaixo do card */
+  left: 50%;
+  transform: translateX(-50%); /* Centraliza o botão */
+}
+
+.menu-botao {
+  color: black;
+}
+
+::ng-deep .mat-menu-panel.custom-menu {
+  background-color: #1a1a1d;
+  color: white;
+  min-width: 180px;
+  padding: 4px 0;
+
+  button.mat-menu-item {
+    font-size: 14px;
+
+    i {
+      margin-right: 10px;
+      font-size: 16px;
+    }
+
+    &:hover {
+      background-color: #333;
+    }
+  }
+}
+
+.create-card {
+  background: #0b5ed700;
+  color: #979797;
+  border: solid 1px;
+  font-size: 20px;
+  justify-content: center;
+
+  span {
+    font-size: 2.5rem;
+  }
+
+  &:hover {
+    background: #004bb7;
     color: white;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 0 5px #444;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
 }
