@@ -43,13 +43,15 @@
             <i class="fa-solid fa-trash"></i>
             <span>Excluir</span>
           </button>
+         <!--
           <button mat-menu-item (click)="alternarStatus(lab)">
             <i class="fa-solid" [ngClass]="lab.status ? 'fa-circle-check' : 'fa-circle-xmark'"></i>
             <span>{{ lab.status ? 'Desativar' : 'Ativar' }}</span>
           </button>
+        -->
         </mat-menu>
       </div>
-
+   
       <!-- Ícone de laboratório (sala de informática) -->
       <div class="icone-central">
         <i class="fa-solid fa-laptop-house"></i> <!-- Ícone de sala de informática -->
@@ -57,7 +59,9 @@
 
       <h3>{{ lab.nome }}</h3>
       <p *ngIf="lab.localizacao">📍 {{ lab.localizacao }}</p>
+      <!--
       <p>Status: {{ lab.status ? 'Ativo' : 'Inativo' }}</p>
+    -->
     </div>
 
     <!-- Card para criar um novo laboratório -->

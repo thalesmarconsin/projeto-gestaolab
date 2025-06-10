@@ -13,19 +13,19 @@ export class ComputerService {
   constructor(private _http: HttpClient) {}
 
   getComputers(): Observable<Computers[]> {
-    return this._http.get(this.compAddress) as Observable<Computers[]>;
+    return this._http.get<Computers[]>(this.compAddress);
   }
 
   getComputer(id: number): Observable<Computers> {
-  return this._http.get<Computers>(`${this.compAddress}/${id}`);
+    return this._http.get<Computers>(`${this.compAddress}/${id}`);
   }
 
   postComputer(computer: Computers): Observable<Computers> {
-    return this._http.post(this.compAddress, computer) as Observable<Computers>;
+    return this._http.post<Computers>(this.compAddress, computer);
   }
 
-  putComputer(id: number, computer: Computers): Observable<Computers> {
-    return this._http.put(`${this.compAddress}/${id}`, computer) as Observable<Computers>;
+  putComputer(computadorId: number, dados: Computers): Observable<Computers> {
+    return this._http.put<Computers>(`${this.compAddress}/${computadorId}`, dados);  // Especificando o tipo correto
   }
 
   deleteComputer(id: number): Observable<any> {
@@ -33,6 +33,6 @@ export class ComputerService {
   }
 
   toggleRetirado(id: number): Observable<Computers> {
-    return this._http.put(`${this.compAddress}/${id}/toggle-retiro`, {}) as Observable<Computers>;
+    return this._http.put<Computers>(`${this.compAddress}/${id}/toggle-retiro`, {});
   }
 }
