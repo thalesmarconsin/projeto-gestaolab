@@ -72,6 +72,7 @@ class LaboratoryController extends Controller
         $validator = Validator::make($request->all(), [
             'nome' => 'required|string|max:255',
             'localizacao' => 'nullable|string|max:255',
+            'descricao' => 'nullable|string', // Adicione esta linha
         ]);
 
         if ($validator->fails()) {
@@ -109,4 +110,38 @@ class LaboratoryController extends Controller
             'status' => 200
         ]);
     }
+
+   public function updateDescription(Request $request, $id)
+{
+    $laboratory = Laboratory::find($id);
+
+    if (!$laboratory) {
+        return response()->json([
+            'message' => 'Laboratório não encontrado',
+            'status' => 404
+        ], 404);
+    }
+
+    $validator = Validator::make($request->all(), [
+        'descricao' => 'required|string|max:500', // Mude para 'descricao'
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'message' => 'Erro de validação',
+            'errors' => $validator->errors(),
+            'status' => 422
+        ], 422);
+    }
+
+    $laboratory->update([
+        'descricao' => $request->descricao // Mude para 'descricao'
+    ]);
+
+    return response()->json([
+        'message' => 'Descrição do laboratório atualizada com sucesso',
+        'laboratory' => $laboratory,
+        'status' => 200
+    ]);
+}
 }

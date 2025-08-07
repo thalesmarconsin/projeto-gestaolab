@@ -15,8 +15,9 @@ return new class extends Migration
         $table->id();
         $table->string('nome');
         $table->string('localizacao')->nullable();
+        $table->text('descricao')->nullable(); // Adicione esta linha
         $table->timestamps();
-      });
+        });
     }
 
     /**

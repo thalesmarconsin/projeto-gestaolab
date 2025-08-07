@@ -127,3 +127,46 @@
     color: white;
   }
 }
+
+.status-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  margin-top: 8px;
+
+  &.retirado {
+    background-color: #fff5f5;
+    color: #e03131;
+    border: 1px solid #ffc9c9;
+    
+    i {
+      color: #e03131;
+    }
+  }
+
+  &.disponivel {
+    background-color: #ebfbee;
+    color: #2b8a3e;
+    border: 1px solid #b2f2bb;
+    
+    i {
+      color: #2b8a3e;
+    }
+  }
+
+  i {
+    font-size: 14px;
+  }
+}
+
+.computador-card {
+  position: relative;
+  
+  .menu-container {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
+}

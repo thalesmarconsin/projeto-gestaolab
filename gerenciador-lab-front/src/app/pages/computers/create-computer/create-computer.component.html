@@ -5,6 +5,9 @@
     <input type="text" formControlName="nome" placeholder="Nome do computador" />
     <input type="text" formControlName="patrimonio" placeholder="Número do patrimônio" />
 
+    <div *ngIf="form.get('patrimonio')?.touched && form.get('patrimonio')?.invalid" class="error">
+      O número do patrimônio é obrigatório e deve conter no mínimo 4 dígitos.
+    </div>
     <button type="submit" [disabled]="form.invalid">Cadastrar</button>
   </form>
 </div>

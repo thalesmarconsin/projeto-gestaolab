@@ -1,74 +1,116 @@
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-  />
-  <link
-    href="https://fonts.googleapis.com/css?family=Work+Sans:400,600"
-    rel="stylesheet"
-  />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
 <header>
   <div class="container">
-    <h1 class="logo">Gerenciador de Laboratório</h1>
+    <div class="header-left">
+      <h1 class="logo">Gerenciador de Laboratório</h1>
+      <div class="welcome-message" *ngIf="usuarioLogado">
+        <span>Bem-vindo, <strong>{{usuarioLogado.nome}}</strong></span>
+      </div>
+    </div>
 
     <nav>
       <ul>
-        <li><a routerLink="/login">Sair</a></li>
+        <li><a href="/perfil"><i class="fas fa-user-circle"></i> Perfil</a></li>
+        <li><a href="/login" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
       </ul>
     </nav>
   </div>
 </header>
 
 <div class="dashboard-container">
-  <h1>Laboratórios</h1>
+  <div class="dashboard-header">
+    <h1><i class="fas fa-flask"></i> Laboratórios</h1>
+    <div class="stats-container">
+      <div class="stat-card">
+        <i class="fas fa-laptop-house"></i>
+        <div>
+          <span class="stat-value">{{ laboratorios.length }}</span>
+          <span class="stat-label">Laboratórios</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-desktop"></i>
+        <div>
+          <span class="stat-value">{{ totalComputadores }}</span>
+          <span class="stat-label">Computadores</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="search-bar">
+    <i class="fas fa-search"></i>
+    <input type="text" placeholder="Pesquisar laboratório..." [(ngModel)]="termoPesquisa" (input)="filtrarLaboratorios()">
+  </div>
 
   <div class="lab-grid">
     <div
       class="lab-card"
-      *ngFor="let lab of laboratorios; let i = index"
+      *ngFor="let lab of laboratoriosFiltrados; let i = index"
+      [class.inativo]="!lab.status"
       (click)="abrirDetalhes(lab.id)"
     >
-      <!-- Menu de opções -->
-      <div class="menu-container">
-        <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-botao">
-          <i class="fa-solid fa-ellipsis-vertical"></i>
-        </button>
-
-        <!-- MatMenu com as opções -->
-        <mat-menu #menu="matMenu" class="custom-menu">
-          <button mat-menu-item (click)="editarLaboratorio(lab.id)">
-            <i class="fa-solid fa-pen-to-square"></i>
-            <span>Editar</span>
+      <div class="lab-card-header">
+        <span class="status-badge" [class.ativo]="lab.status">
+          {{ lab.status ? 'Ativo' : 'Inativo' }}
+        </span>
+        <div class="menu-container">
+          <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-botao" (click)="$event.stopPropagation()">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
           </button>
-          <button mat-menu-item (click)="excluirLaboratorio(lab.id)">
-            <i class="fa-solid fa-trash"></i>
-            <span>Excluir</span>
-          </button>
-         <!--
-          <button mat-menu-item (click)="alternarStatus(lab)">
-            <i class="fa-solid" [ngClass]="lab.status ? 'fa-circle-check' : 'fa-circle-xmark'"></i>
-            <span>{{ lab.status ? 'Desativar' : 'Ativar' }}</span>
-          </button>
-        -->
-        </mat-menu>
+          <mat-menu #menu="matMenu" class="custom-menu">
+            <button mat-menu-item (click)="editarLaboratorio(lab.id)">
+              <i class="fa-solid fa-pen-to-square"></i>
+              <span>Editar</span>
+            </button>
+            <button mat-menu-item (click)="excluirLaboratorio(lab.id)">
+              <i class="fa-solid fa-trash"></i>
+              <span>Excluir</span>
+            </button>
+            <button mat-menu-item (click)="alternarStatus(lab); $event.stopPropagation()">
+              <i class="fa-solid" [ngClass]="lab.status ? 'fa-circle-xmark' : 'fa-circle-check'"></i>
+              <span>{{ lab.status ? 'Desativar' : 'Ativar' }}</span>
+            </button>
+            <button mat-menu-item (click)="abrirDialogoDescricao(lab); $event.stopPropagation()">
+              <i class="fa-solid fa-note-sticky"></i>
+              <span>{{ lab.descricao ? 'Editar Nota' : 'Adicionar Nota' }}</span>
+            </button>
+          </mat-menu>
+        </div>
       </div>
-   
-      <!-- Ícone de laboratório (sala de informática) -->
+     
       <div class="icone-central">
-        <i class="fa-solid fa-laptop-house"></i> <!-- Ícone de sala de informática -->
+        <i class="fa-solid fa-laptop-house"></i>
       </div>
 
       <h3>{{ lab.nome }}</h3>
-      <p *ngIf="lab.localizacao">📍 {{ lab.localizacao }}</p>
-      <!--
-      <p>Status: {{ lab.status ? 'Ativo' : 'Inativo' }}</p>
-    -->
+      <p *ngIf="lab.localizacao"><i class="fas fa-map-marker-alt"></i> {{ lab.localizacao }}</p>
+      
+      <div class="descricao-container" *ngIf="lab.descricao">
+        <p class="descricao-label">Nota:</p>
+        <p class="descricao">{{ lab.descricao }}</p>
+      </div>
     </div>
 
-    <!-- Card para criar um novo laboratório -->
     <div class="lab-card create-card" (click)="criarLaboratorio()">
-      <p><i class="fa-solid fa-plus"></i> Novo Laboratório</p>
+      <div class="create-content">
+        <i class="fa-solid fa-plus"></i>
+        <p>Novo Laboratório</p>
+      </div>
     </div>
   </div>
 </div>
 
 <router-outlet></router-outlet>
+
+<!-- Diálogo para adicionar/editar descrição -->
+<dialog #dialogoDescricao class="descricao-dialog">
+  <h3>{{ laboratorioSelecionado?.descricao ? 'Editar' : 'Adicionar' }} Nota para {{ laboratorioSelecionado?.nome }}</h3>
+  <textarea [(ngModel)]="novaDescricao" placeholder="Digite a nota (ex: Em manutenção até 30/05)"></textarea>
+  <div class="dialog-buttons">
+    <button class="cancel-btn" (click)="fecharDialogo()">Cancelar</button>
+    <button class="confirm-btn" (click)="salvarDescricao()">Salvar</button>
+  </div>
+</dialog>

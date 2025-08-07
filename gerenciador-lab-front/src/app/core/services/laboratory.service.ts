@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Laboratory } from '../models/laboratory.model';
 import { environment } from '../../../environments/environment';
-import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +13,8 @@ export class LaboratoryService {
   constructor(private _http: HttpClient) {}
 
   getLaboratories(): Observable<Laboratory[]> {
-  return this._http.get<Laboratory[]>(this.labAddress); 
-}
+    return this._http.get<Laboratory[]>(this.labAddress); 
+  }
 
   getLaboratory(id: number): Observable<{ laboratorio: Laboratory }> {
     return this._http.get<{ laboratorio: Laboratory }>(`${this.labAddress}/${id}`);
@@ -32,4 +31,16 @@ export class LaboratoryService {
   deleteLaboratory(id: number): Observable<any> {
     return this._http.delete(`${this.labAddress}/${id}`);
   }
+
+  // Novo método para atualizar status
+  atualizarStatusLaboratorio(id: number, status: boolean): Observable<Laboratory> {
+    return this._http.patch(`${this.labAddress}/${id}/status`, { status }) as Observable<Laboratory>;
+  }
+
+  atualizarDescricaoLaboratorio(id: number, descricao: string): Observable<Laboratory> {
+  return this._http.patch<Laboratory>(
+    `${this.labAddress}/${id}/description`,  
+    { descricao: descricao }  // Mude para 'descricao'
+  );
+}
 }

@@ -10,8 +10,9 @@ class Laboratory extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nome', 
-        'localizacao'
+    'nome', 
+    'localizacao',
+    'descricao' // Adicione esta linha
     ];
 
     public function computadores()
