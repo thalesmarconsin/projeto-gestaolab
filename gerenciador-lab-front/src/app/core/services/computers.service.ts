@@ -20,6 +20,10 @@ export class ComputerService {
     return this._http.get<Computers>(`${this.compAddress}/${id}`);
   }
 
+  createComputer(computer: Omit<Computers, 'id'>): Observable<Computers> {
+    return this._http.post<Computers>(this.compAddress, computer);
+  }
+
   postComputer(computer: Computers): Observable<Computers> {
     return this._http.post<Computers>(this.compAddress, computer);
   }

@@ -61,6 +61,10 @@ export class DashboardComponent implements OnInit {
       next: (response: any) => {
         this.laboratorios = Array.isArray(response) ? response : 
                           (response?.laboratorios || []);
+        this.laboratorios = this.laboratorios.map(lab => ({
+          ...lab,
+          status: lab.status !== undefined ? lab.status : true
+        }));
         this.laboratoriosFiltrados = [...this.laboratorios];
         this.calcularTotalComputadores();
       },
@@ -123,26 +127,22 @@ export class DashboardComponent implements OnInit {
   }
 
   alternarStatus(lab: Laboratory): void {
-    if (lab.id === undefined) return;
-    
     const novoStatus = !lab.status;
     const confirmacao = confirm(`Deseja realmente ${novoStatus ? 'ativar' : 'inativar'} o laboratório ${lab.nome}?`);
     
     if (!confirmacao) return;
 
-    this.laboratoryService.atualizarStatusLaboratorio(lab.id, novoStatus).subscribe({
-      next: (laboratorioAtualizado) => {
-        const index = this.laboratorios.findIndex(l => l.id === lab.id);
-        if (index !== -1) {
-          this.laboratorios[index] = laboratorioAtualizado;
-          this.laboratoriosFiltrados = [...this.laboratorios];
-        }
-      },
-      error: (error) => {
-        console.error('Erro ao atualizar status:', error);
-        alert('Erro ao atualizar status do laboratório');
-      }
-    });
+    lab.status = novoStatus;
+    
+    const index = this.laboratorios.findIndex(l => l.id === lab.id);
+    if (index !== -1) {
+      this.laboratorios[index].status = novoStatus;
+    }
+    
+    const indexFiltrado = this.laboratoriosFiltrados.findIndex(l => l.id === lab.id);
+    if (indexFiltrado !== -1) {
+      this.laboratoriosFiltrados[indexFiltrado].status = novoStatus;
+    }
   }
 
   abrirDialogoDescricao(lab: Laboratory): void {

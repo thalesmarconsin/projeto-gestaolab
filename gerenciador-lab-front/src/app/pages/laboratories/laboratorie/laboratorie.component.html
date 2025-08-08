@@ -1,50 +1,46 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-<div class="detalhes-container" *ngIf="laboratorio">
-  <h2>{{ laboratorio.nome }}</h2>
-
-<div class="computador-grid">
-  <ng-container *ngFor="let computador of computadores; let i = index">
-    <div class="computador-card" [ngClass]="{ 'left-side': (i % 10) < 5, 'right-side': (i % 10) >= 5 }">
-      <div class="menu-container">
-        <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-botao">
-          <i class="fa-solid fa-ellipsis-vertical"></i>
-        </button>
-
-        <mat-menu #menu="matMenu" class="custom-menu">
-          <button mat-menu-item (click)="editarComputador(computador)">
-            <i class="fa-solid fa-pen-to-square"></i>
-            <span>Editar</span>
-          </button>
-    
-          <button mat-menu-item (click)="excluirComputador(computador)">
-            <i class="fa-solid fa-trash"></i>
-            <span>Excluir</span>
-          </button>
-          <button mat-menu-item (click)="alternarRetirada(computador)">
-            <i class="fa-solid" [ngClass]="computador.retirado ? 'fa-circle-check' : 'fa-circle-xmark'"></i>
-            <span>{{ computador.retirado ? 'Disponibilizar' : 'Indisponibilizar' }}</span>
-          </button>
-        </mat-menu>
-      </div>
-
-      <div class="icone-central">
-        <i class="fa-solid fa-desktop"></i>
-      </div>
-
-      <h4>{{ computador.nome }}</h4>
-      <p><strong>Patrimônio:</strong> {{ computador.patrimonio }}</p>
-      <div class="status-container" [ngClass]="{'retirado': computador.retirado, 'disponivel': !computador.retirado}">
-        <i class="fa-solid" [ngClass]="computador.retirado ? 'fa-circle-xmark' : 'fa-circle-check'"></i>
-        <span>{{ computador.retirado ? 'Indisponível' : 'Disponível' }}</span>
-      </div>
+<div class="popup">
+  <form class="form" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="40" width="40">
+        <path stroke="#115DFC" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+          d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6Z"/>
+        <path stroke="#115DFC" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+          d="M14 15c0 3 2 5 2 5H8s2-2 2-5"/>
+      </svg>
     </div>
-  </ng-container>
-</div>
-
-  <div class="criar-computador-btn">
-    <button (click)="criarComputador()" class="botao-novo">
-      <i class="fa-solid fa-plus"></i> Novo Computador
-    </button>
-  </div>  
+    <div class="note">
+      <label class="title">Novo Computador</label>
+      <span class="subtitle">Preencha os dados para adicionar um novo computador</span>
+    </div>
+    
+    <input 
+      formControlName="nome" 
+      placeholder="Nome do computador" 
+      title="Nome do computador" 
+      type="text" 
+      class="input_field"
+      required
+    >
+    
+    <input 
+      formControlName="patrimonio" 
+      placeholder="Número do patrimônio" 
+      title="Patrimônio" 
+      type="text" 
+      class="input_field"
+      required
+    >
+    
+    <div class="checkbox-container">
+      <label>
+        <input type="checkbox" formControlName="retirado">
+        <span>Marcar como indisponível</span>
+      </label>
+    </div>
+    
+    <button type="submit" class="submit" [disabled]="form.invalid">Adicionar</button>
+  </form>
 </div>

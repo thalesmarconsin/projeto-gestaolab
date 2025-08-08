@@ -32,15 +32,10 @@ export class LaboratoryService {
     return this._http.delete(`${this.labAddress}/${id}`);
   }
 
-  // Novo método para atualizar status
-  atualizarStatusLaboratorio(id: number, status: boolean): Observable<Laboratory> {
-    return this._http.patch(`${this.labAddress}/${id}/status`, { status }) as Observable<Laboratory>;
-  }
-
   atualizarDescricaoLaboratorio(id: number, descricao: string): Observable<Laboratory> {
   return this._http.patch<Laboratory>(
     `${this.labAddress}/${id}/description`,  
-    { descricao: descricao }  // Mude para 'descricao'
+    { descricao: descricao }  
   );
 }
 }

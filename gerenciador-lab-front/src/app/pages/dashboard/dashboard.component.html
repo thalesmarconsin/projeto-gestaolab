@@ -46,61 +46,56 @@
   </div>
 
   <div class="lab-grid">
-    <div
-      class="lab-card"
-      *ngFor="let lab of laboratoriosFiltrados; let i = index"
-      [class.inativo]="!lab.status"
-      (click)="abrirDetalhes(lab.id)"
-    >
-      <div class="lab-card-header">
-        <span class="status-badge" [class.ativo]="lab.status">
-          {{ lab.status ? 'Ativo' : 'Inativo' }}
-        </span>
-        <div class="menu-container">
-          <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-botao" (click)="$event.stopPropagation()">
-            <i class="fa-solid fa-ellipsis-vertical"></i>
+  <div class="lab-card" *ngFor="let lab of laboratoriosFiltrados" [class.inativo]="!lab.status" (click)="abrirDetalhes(lab.id)">
+    <div class="lab-card-header" (click)="$event.stopPropagation()">
+      <span class="status-badge" [class.ativo]="lab.status">
+        {{ lab.status ? 'Ativo' : 'Inativo' }}
+      </span>
+      <div class="menu-container">
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-botao">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
+        <mat-menu #menu="matMenu" class="custom-menu">
+          <button mat-menu-item (click)="editarLaboratorio(lab.id); $event.stopPropagation()">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>Editar</span>
           </button>
-          <mat-menu #menu="matMenu" class="custom-menu">
-            <button mat-menu-item (click)="editarLaboratorio(lab.id)">
-              <i class="fa-solid fa-pen-to-square"></i>
-              <span>Editar</span>
-            </button>
-            <button mat-menu-item (click)="excluirLaboratorio(lab.id)">
-              <i class="fa-solid fa-trash"></i>
-              <span>Excluir</span>
-            </button>
-            <button mat-menu-item (click)="alternarStatus(lab); $event.stopPropagation()">
-              <i class="fa-solid" [ngClass]="lab.status ? 'fa-circle-xmark' : 'fa-circle-check'"></i>
-              <span>{{ lab.status ? 'Desativar' : 'Ativar' }}</span>
-            </button>
-            <button mat-menu-item (click)="abrirDialogoDescricao(lab); $event.stopPropagation()">
-              <i class="fa-solid fa-note-sticky"></i>
-              <span>{{ lab.descricao ? 'Editar Nota' : 'Adicionar Nota' }}</span>
-            </button>
-          </mat-menu>
-        </div>
-      </div>
-     
-      <div class="icone-central">
-        <i class="fa-solid fa-laptop-house"></i>
-      </div>
-
-      <h3>{{ lab.nome }}</h3>
-      <p *ngIf="lab.localizacao"><i class="fas fa-map-marker-alt"></i> {{ lab.localizacao }}</p>
-      
-      <div class="descricao-container" *ngIf="lab.descricao">
-        <p class="descricao-label">Nota:</p>
-        <p class="descricao">{{ lab.descricao }}</p>
+          <button mat-menu-item (click)="excluirLaboratorio(lab.id); $event.stopPropagation()">
+            <i class="fa-solid fa-trash"></i>
+            <span>Excluir</span>
+          </button>
+          <button mat-menu-item (click)="alternarStatus(lab); $event.stopPropagation()">
+            <i class="fa-solid" [ngClass]="lab.status ? 'fa-circle-xmark' : 'fa-circle-check'"></i>
+            <span>{{ lab.status ? 'Desativar' : 'Ativar' }}</span>
+          </button>
+          <button mat-menu-item (click)="abrirDialogoDescricao(lab); $event.stopPropagation()">
+            <i class="fa-solid fa-note-sticky"></i>
+            <span>{{ lab.descricao ? 'Editar Nota' : 'Adicionar Nota' }}</span>
+          </button>
+        </mat-menu>
       </div>
     </div>
+    
+    <div class="icone-central">
+      <i class="fa-solid fa-laptop-house"></i>
+    </div>
 
-    <div class="lab-card create-card" (click)="criarLaboratorio()">
-      <div class="create-content">
-        <i class="fa-solid fa-plus"></i>
-        <p>Novo Laboratório</p>
-      </div>
+    <h3>{{ lab.nome }}</h3>
+    <p *ngIf="lab.localizacao"><i class="fas fa-map-marker-alt"></i> {{ lab.localizacao }}</p>
+    
+    <div class="descricao-container" *ngIf="lab.descricao">
+      <p class="descricao-label">Nota:</p>
+      <p class="descricao">{{ lab.descricao }}</p>
     </div>
   </div>
+
+  <div class="lab-card create-card" (click)="criarLaboratorio()">
+    <div class="create-content">
+      <i class="fa-solid fa-plus"></i>
+      <p>Novo Laboratório</p>
+    </div>
+  </div>
+</div>
 </div>
 
 <router-outlet></router-outlet>

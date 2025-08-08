@@ -1,10 +1,31 @@
-<div class="form-container">
-  <h2>Novo Laboratório</h2>
-
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <input type="text" formControlName="nome" placeholder="Nome do laboratório" />
-    <input type="text" formControlName="localizacao" placeholder="Localização (opcional)" />
-
-    <button type="submit" [disabled]="form.invalid">Criar</button>
+<div class="popup">
+  <form class="form" [formGroup]="form" (ngSubmit)="submit()">
+    <div class="icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="40" width="40">
+        <path stroke="#115DFC" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+          d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6Z"/>
+        <path stroke="#115DFC" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+          d="M14 15c0 3 2 5 2 5H8s2-2 2-5"/>
+      </svg>
+    </div>
+    <div class="note">
+      <label class="title">Novo Laboratório</label>
+      <span class="subtitle">Preencha os dados para criar um novo laboratório</span>
+    </div>
+    <input 
+      formControlName="nome" 
+      placeholder="Nome do laboratório" 
+      title="Nome do laboratório" 
+      type="text" 
+      class="input_field"
+    >
+    <input 
+      formControlName="localizacao" 
+      placeholder="Localização (opcional)" 
+      title="Localização" 
+      type="text" 
+      class="input_field"
+    >
+    <button type="submit" class="submit" [disabled]="form.invalid">Criar</button>
   </form>
 </div>
