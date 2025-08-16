@@ -1,0 +1,26 @@
+<div class="popup">
+  <div class="popup-inner">
+    <h2>Editar Laboratório</h2>
+
+    <form [formGroup]="laboratorieForm" (ngSubmit)="onSubmit()" class="form">
+      <input
+        type="text"
+        formControlName="nome"
+        placeholder="Nome do laboratório"
+        class="input_field"
+        required
+      />
+
+      <input
+        type="text"
+        formControlName="localizacao"
+        placeholder="Localização (opcional)"
+        class="input_field"
+      />
+
+      <button type="submit" class="submit" [disabled]="laboratorieForm.invalid">
+        Salvar Alterações
+      </button>
+    </form>
+  </div>
+</div>

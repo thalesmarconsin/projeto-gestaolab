@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-<div class="popup">
-  <form class="form" [formGroup]="form" (ngSubmit)="submit()">
+<div class="popup" *ngIf="showForm">
+  <form class="form" [formGroup]="computerForm" (ngSubmit)="onSubmit()">
     <div class="icon">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="40" width="40">
         <path stroke="#115DFC" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -11,6 +11,7 @@
           d="M14 15c0 3 2 5 2 5H8s2-2 2-5"/>
       </svg>
     </div>
+
     <div class="note">
       <label class="title">Novo Computador</label>
       <span class="subtitle">Preencha os dados para adicionar um novo computador</span>
@@ -41,6 +42,8 @@
       </label>
     </div>
     
-    <button type="submit" class="submit" [disabled]="form.invalid">Adicionar</button>
+    <button type="submit" class="submit" [disabled]="computerForm.invalid">
+      Adicionar
+    </button>
   </form>
 </div>

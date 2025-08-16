@@ -27,10 +27,10 @@ export class LaboratorieComponent implements OnInit {
   laboratorio!: Laboratory;
   computadores: Computers[] = [];
   laboratorioId!: number;
-  loadingStates: {[id: number]: boolean} = {};
+  loadingStates: { [id: number]: boolean } = {};
   menuAberto: number | null = null;
-  
-  // Formulário reativo
+
+  // ✅ Formulário reativo
   computerForm: FormGroup;
   showForm = false;
 
@@ -80,6 +80,7 @@ export class LaboratorieComponent implements OnInit {
     }
   }
 
+  // ✅ Método correto
   onSubmit(): void {
     if (this.computerForm.invalid) return;
 
@@ -101,33 +102,33 @@ export class LaboratorieComponent implements OnInit {
     });
   }
 
-  
-alternarRetirada(computador: Computers): void {
-    // Verificação mais segura do ID
+  alternarRetirada(computador: Computers): void {
     if (typeof computador.id !== 'number') {
-        console.error('ID do computador inválido');
-        return;
+      console.error('ID do computador inválido');
+      return;
     }
 
     const id = computador.id;
-    const confirmacao = confirm(`Deseja ${computador.retirado ? 'disponibilizar' : 'indisponibilizar'} este computador?`);
-    
+    const confirmacao = confirm(
+      `Deseja ${computador.retirado ? 'disponibilizar' : 'indisponibilizar'} este computador?`
+    );
+
     if (!confirmacao) return;
 
     this.loadingStates[id] = true;
-    
+
     this.computerService.toggleRetirado(id).subscribe({
-        next: (updated) => {
-            computador.retirado = updated.retirado;
-            delete this.loadingStates[id]; // Removemos ao invés de setar false
-        },
-        error: (error) => {
-            console.error('Erro ao alternar status:', error);
-            delete this.loadingStates[id];
-            alert('Erro ao atualizar status do computador');
-        }
+      next: (updated) => {
+        computador.retirado = updated.retirado;
+        delete this.loadingStates[id];
+      },
+      error: (error) => {
+        console.error('Erro ao alternar status:', error);
+        delete this.loadingStates[id];
+        alert('Erro ao atualizar status do computador');
+      }
     });
-}
+  }
 
   editarComputador(computador: Computers): void {
     if (computador.id) {

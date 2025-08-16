@@ -14,6 +14,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/laboratories/laboratorie/laboratorie.component').then(m => m.LaboratorieComponent)
   },
   {
+    path: 'laboratorio/editar/:id',
+    loadComponent: () => import('./pages/laboratories/edit-laboratorie/edit-laboratorie.component').then(m => m.EditLaboratorieComponent)
+  },
+  {
     path: 'criar',
     loadComponent: () => import('./pages/laboratories/create-laboratorie/create-laboratorie.component').then(m => m.CreateLaboratorieComponent)
   },
@@ -21,9 +25,4 @@ export const routes: Routes = [
     path: 'computador/criar/:laboratorioId',
     loadComponent: () => import('./pages/computers/create-computer/create-computer.component').then(m => m.CreateComputerComponent)
   },
-  {
-  path: 'computador/editar/:id',
-  loadComponent: () => import('./pages/computers/edit-computer/edit-computer.component').then(m => m.EditComputerComponent)
-  }
-
 ];

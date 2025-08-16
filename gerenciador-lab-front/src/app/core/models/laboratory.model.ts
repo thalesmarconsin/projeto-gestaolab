@@ -3,6 +3,6 @@ export interface Laboratory {
   nome: string;
   localizacao?: string;
   status?: boolean;
-  descricao?: string; // Adicionando a propriedade descricao
-  quantidadeComputadores?: number; // Adicionando a propriedade quantidadeComputadores
+  descricao?: string;
+  quantidadeComputadores?: number; 
 }
